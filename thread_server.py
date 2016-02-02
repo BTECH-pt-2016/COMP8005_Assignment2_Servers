@@ -17,6 +17,7 @@ def main():
         print numClient, 'Connection Established With:', address
         process = Process(target=worker, args=(client,))
         process.start()
+        process.join()
 
 def worker(client):
     data = client.recv(SIZE)

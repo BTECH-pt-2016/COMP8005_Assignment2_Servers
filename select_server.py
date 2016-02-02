@@ -1,6 +1,8 @@
 import socket
 import select
 import sys
+import cProfile
+
 
 HOST = ''
 PORT = 8005
@@ -12,15 +14,17 @@ def main():
     server.bind((HOST,PORT))
     server.listen(BACKLOG)
     input = [server,sys.stdin]
-    numClient = 0;
+    numClient = 0
     running = 1
     while running:
         inputready,outputready,exceptready = select.select(input,[],[])
         for s in inputready:
+            print i
             if s == server:
                 client, address = server.accept()
                 numClient = numClient + 1
                 print numClient, 'Connection Established With:', address
+                client.setblocking(0)
                 input.append(client)
         
             elif s == sys.stdin:
@@ -32,7 +36,7 @@ def main():
                 data = s.recv(SIZE)
                 if data:
                     s.send(data)
-                else:
+                    print 'removing socket'
                     s.close()
                     input.remove(s)
     server.close()
