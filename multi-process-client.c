@@ -66,8 +66,9 @@ int main (int argc, char **argv)
 			exit(1);
 	}
 
- for (i = 0; i < 10; i++)
+ for (i = 0; i < 2000; i++)
  {
+	
 
 		 usleep(10000);
 	 if (fork() == 0)
@@ -106,7 +107,8 @@ int main (int argc, char **argv)
 			//printf("Transmit:\n");
 
 			// get user's text
-			sprintf (sbuf, "Hello from client!!\n");
+			i++;
+			sprintf (sbuf, "Hello from client!!");
 
 			// Transmit data through the socket
 
@@ -114,7 +116,7 @@ int main (int argc, char **argv)
 			send (sd, sbuf, BUFLEN, 0);
 
 
-			printf("Receive:\n");
+			//printf("Receive:\n");
 			bp = rbuf;
 			bytes_to_read = BUFLEN;
 

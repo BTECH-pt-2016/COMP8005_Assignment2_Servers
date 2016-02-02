@@ -19,7 +19,6 @@ def main():
     while running:
         inputready,outputready,exceptready = select.select(input,[],[])
         for s in inputready:
-            print i
             if s == server:
                 client, address = server.accept()
                 numClient = numClient + 1
@@ -36,7 +35,6 @@ def main():
                 data = s.recv(SIZE)
                 if data:
                     s.send(data)
-                    print 'removing socket'
                     s.close()
                     input.remove(s)
     server.close()
