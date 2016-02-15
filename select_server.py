@@ -5,7 +5,7 @@ import cProfile
 
 
 HOST = ''
-PORT = 8005
+PORT = 7000
 BACKLOG = 5
 SIZE = 1024
 
@@ -25,16 +25,16 @@ def main():
                 print numClient, 'Connection Established With:', address
                 client.setblocking(0)
                 input.append(client)
-        
+
             elif s == sys.stdin:
-                # ENDS LOOP
                 junk = sys.stdin.readline()
                 running = 0
-        
-            else:# hundle sockets all other sockets
+
+            else:
                 data = s.recv(SIZE)
                 if data:
                     s.send(data)
+                else:
                     s.close()
                     input.remove(s)
     server.close()

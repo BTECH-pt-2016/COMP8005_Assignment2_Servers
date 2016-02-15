@@ -2,7 +2,7 @@ import socket
 from multiprocessing import Process
 
 HOST = ''
-PORT = 8005
+PORT = 7000
 BACKLOG = 5
 SIZE = 1024
 
@@ -17,13 +17,19 @@ def main():
         print numClient, 'Connection Established With:', address
         process = Process(target=worker, args=(client,))
         process.start()
-        process.join()
 
 def worker(client):
-    data = client.recv(SIZE)
-    if data:
-        client.send(data)
-    client.close()
+    while True:
+        try:
+            data = client.recv(SIZE)
+            if data:
+                client.send(data)
+            else:
+                client.close()
+                return
+        except:
+            client.close()
+            return
 
 
 if __name__ == "__main__":
